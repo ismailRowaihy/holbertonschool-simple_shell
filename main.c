@@ -64,7 +64,7 @@ int main(void)
 	{
 	  wait(&my_son_pid);
 	}      
-  free(line);
    }
+  free(line);
   return (0);
 }
