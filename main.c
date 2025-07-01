@@ -12,13 +12,12 @@
  */
 int main(void)
 {
-  pid_t my_pid,my_son_pid,my_ppid;
+  pid_t my_son_pid;
   char *line = NULL;
   size_t n = 0, i;
   ssize_t nread;
   char *args[64];
-  //char *args[3] = {"/bin/ls","-l",NULL};
-  //extern char **environ;
+  extern char **environ;
   char *tokens;
   const char *deli = " ";
   
@@ -41,7 +40,6 @@ int main(void)
       while(tokens)
       {
        args[i] = tokens;
-      printf("at index %ld there is %s\n",i,args[i]);
      tokens = strtok(NULL, deli);
       i++;
       }
@@ -57,21 +55,16 @@ int main(void)
      
       if (my_son_pid ==  0)
 	{
-	  printf("im the kid");
-	  if(execvp(args[0],args) == -1)
+	  
+	  if(execve(args[0],args,environ) == -1)
 	    perror("failedx");
-	  printf("after exec");
+	  
 	  return (0);
 	}
       else
 	{
-	  printf("before %d \n",my_son_pid);
 	  wait(&my_son_pid);
-	  printf("affter %d \n",my_son_pid);
-	  printf("hi kid im dad");
 	}
-     
-      printf("%s",line);
       free(line);
       
     }
