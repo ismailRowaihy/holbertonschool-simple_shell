@@ -59,7 +59,7 @@ int main(void)
 	  if(execve(args[0],args,environ) == -1)
 	    perror("failedx");
 	  
-	  return (0);
+	  exit(EXIT_FAILURE);
 	}
       else
 	{
