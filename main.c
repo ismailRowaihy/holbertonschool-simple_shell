@@ -57,8 +57,6 @@ int main(void)
 	{
 	  
 	  if(execve(args[0],args,environ) == -1)
-	    perror("failedx");
-	  
 	  exit(EXIT_FAILURE);
 	}
       else
