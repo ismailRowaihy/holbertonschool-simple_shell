@@ -29,7 +29,6 @@ int main(void)
       nread = getline(&line,&n,stdin);
       if( nread == -1 )
 	{
-	  printf("error");
 	  break;
 	}
       line[strcspn(line,"\n")] = 0;
@@ -57,7 +56,9 @@ int main(void)
 	{
 	  
 	  if(execve(args[0],args,environ) == -1)
-	  exit(EXIT_FAILURE);
+	    {
+	    exit(EXIT_FAILURE);
+	    }
 	}
       else
 	{
