@@ -7,9 +7,6 @@
 
 void file_exec(pid_t my_son_pid, char **args)
 {
-
-//extern char **environ;
-
   if (my_son_pid ==  0)
 	{
       
