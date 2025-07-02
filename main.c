@@ -21,7 +21,7 @@ int main(void)
   ssize_t nread;
   char *args[64];
   int i;
-
+char *abs_path;
   while(1)
     {
       if(isatty(STDIN_FILENO))
@@ -38,20 +38,34 @@ int main(void)
       if (strcmp(args[0], "exit") == 0)
 	  exit(0);
 
+
+  if(args[0][0] != '/')
+{
+abs_path = malloc(strlen("/bin/") + strlen(args[0]) + 1);
+
+
+
+if(abs_path == NULL)
+{
+perror("malloc failed");
+exit(EXIT_FAILURE);
+}
+strcpy(abs_path,"/bin/");
+strcat(abs_path,args[0]);
+args[0] = abs_path;
+}
+
+
       if(access(args[0],F_OK) == 0)
 	{
-
 	  my_son_pid = fork();
 	  file_exec(my_son_pid,args);
 	}
       else
 	printf("the file is not correct");
-
     }
-
-  for(i = 0;args[i];i++)
-          free(args[i]);
-
+if(args[0][0] == '/')
+free(args[0]);
 free(line);
   return (0);
 }
