@@ -38,8 +38,8 @@ char *abs_path;
 
                 if (strcmp(args[0], "exit") == 0)
                 {
+free(line);
                         exit(0);
-return(0);
                 }
 
 
