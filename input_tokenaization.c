@@ -8,20 +8,19 @@
 
 void input_tok(char *line,char **args){
   int i;
- char *tokens;
-
- line[strcspn(line,"\n")] = 0;
-      
-      tokens =strtok(line," ");
-      
-      i = 0;
-      while(tokens)
-      {
-       args[i] = tokens;
-     tokens = strtok(NULL," ");
-      i++;
-      }
-      
-      args[i] = NULL;
+  char *tokens;
+ 
+  line[strcspn(line,"\n")] = 0;
   
+  tokens =strtok(line," ");
+      
+  i = 0;
+  while(tokens)
+    {
+      args[i] = tokens;
+      tokens = strtok(NULL," ");
+      i++;
+    }
+ 
+  args[i] = NULL;
 }

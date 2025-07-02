@@ -20,7 +20,7 @@ int main(void)
   size_t n = 0;
   ssize_t nread;
   char *args[64];
-  int path;
+  char *relBUFFER = "/bin/";
 
   while(1)
     {   
@@ -37,16 +37,21 @@ int main(void)
 
 
       if (strcmp(args[0], "exit") == 0)
-	  exit(0);
+	  exit(0);      
 
-      path = open("/bin/",O_DIRECTORY);
-      if (path == -1)
-	perror("failed to open the file");
-
-
-      if(faccessat(path,args[0], F_OK , 0) != -1)
+      if (args[0][0] != '/')
 	{
-	  close(path);
+	  relBUFFER = "/bin/";
+	  strcat(relBUFFER,args[0]);
+	  printf("%s\n",relBUFFER);
+	}
+
+      if(relBUFFER = "")
+	relBUFFER = args[0];
+	
+      if(access(relBUFFER,F_OK) == 0)
+	{
+	  relBUFFER = "";
 	  my_son_pid = fork();
 	  file_exec(my_son_pid,args);
 	}
