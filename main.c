@@ -38,7 +38,7 @@ char *abs_path;
 
                 if (strcmp(args[0], "exit") == 0)
                 {
-free(line);
+                        free(line);
                         exit(0);
                 }
 
@@ -46,13 +46,9 @@ free(line);
       if (args[0] == NULL)
 	continue;
 
-
-
   if(args[0][0] != '/')
 {
 abs_path = malloc(strlen("/bin/") + strlen(args[0]) + 1);
-
-
 
 if(abs_path == NULL)
 {
@@ -71,7 +67,7 @@ args[0] = abs_path;
 
  my_son_pid = fork();
 
-	 
+
 	  file_exec(my_son_pid,args);
 	}
       else
@@ -79,7 +75,7 @@ args[0] = abs_path;
 if(args[0][0] == '/')
 free(args[0]);
 free(line);
-              exit(2);
+              exit(0);
 }
    }
 if(args[0][0] == '/')
