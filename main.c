@@ -39,7 +39,7 @@ char *abs_path;
                 if (strcmp(args[0], "exit") == 0)
                 {
                         exit(0);
-break;
+return(0);
                 }
 
 
