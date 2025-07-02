@@ -7,12 +7,12 @@
 #include <string.h>
 #include "shell.h"
 #include <fcntl.h>
-
 /**
  *
  *
  *
  */
+
 int main(void)
 {
   pid_t my_son_pid;
@@ -23,19 +23,30 @@ int main(void)
 char *abs_path;
   while(1)
     {
-      if(isatty(STDIN_FILENO))
+
+     if(isatty(STDIN_FILENO))
 	printf("($) ");
+
 
       nread = getline(&line,&n,stdin);
       if( nread == -1 )
         break;
 
       input_tok(line,args);
+
+
+
+                if (strcmp(args[0], "exit") == 0)
+                {
+                        printf("OK");
+                        exit(0);
+break;
+                }
+
+
       if (args[0] == NULL)
 	continue;
 
-      if (strcmp(args[0], "exit") == 0)
-	  exit(0);
 
 
   if(args[0][0] != '/')
@@ -57,7 +68,11 @@ args[0] = abs_path;
 
       if(access(args[0],F_OK) == 0)
 	{
-	  my_son_pid = fork();
+
+
+ my_son_pid = fork();
+
+	 
 	  file_exec(my_son_pid,args);
 	}
       else
