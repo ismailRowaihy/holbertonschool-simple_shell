@@ -38,7 +38,6 @@ char *abs_path;
 
                 if (strcmp(args[0], "exit") == 0)
                 {
-                        printf("OK");
                         exit(0);
 break;
                 }
