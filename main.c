@@ -57,7 +57,7 @@ abs_path = malloc(strlen("/bin/") + strlen(args[0]) + 1);
 if(abs_path == NULL)
 {
 perror("malloc failed");
-exit(EXIT_FAILURE);
+exit(0);
 }
 strcpy(abs_path,"/bin/");
 strcat(abs_path,args[0]);
@@ -75,8 +75,13 @@ args[0] = abs_path;
 	  file_exec(my_son_pid,args);
 	}
       else
-	printf("the file is not correct");
-    }
+{
+if(args[0][0] == '/')
+free(args[0]);
+free(line);
+              exit(0);
+}
+   }
 if(args[0][0] == '/')
 free(args[0]);
 free(line);
