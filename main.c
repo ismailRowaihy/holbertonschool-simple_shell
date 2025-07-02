@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <string.h>
 #include "shell.h"
+#include <fcntl.h>
 
 /**
  *
@@ -20,31 +21,41 @@ int main(void)
   ssize_t nread;
   char *args[64];
   char *tokens;
-struct stat st;
-  
+  struct stat st;
+  int path;
+
   while(1)
     {   
       if(isatty(STDIN_FILENO))
 	printf("($) ");
-   
+      
       nread = getline(&line,&n,stdin);
       if( nread == -1 )
         break;
       
-input_tok(line,tokens,args);
+      input_tok(line,tokens,args);
+      if (args[0] == NULL)
+	continue;
 
-if (args[0] == NULL)
-  continue;
+
+      if (strcmp(args[0], "exit") == 0)
+	  exit(0);
+
+      path = open("/bin/",O_DIRECTORY);
+      if (path == -1)
+	perror("failed to open the file");
 
 
-if(stat(args[0], &st) == 0)
-{
-my_son_pid = fork();
-file_exec(my_son_pid,args);
-}
-else
-printf("the path is not correct");  
-}
-free(line);
+ if(faccessat(path,args[0], F_OK , 0) != -1)
+   {
+     close(path);
+     my_son_pid = fork();
+     file_exec(my_son_pid,args);
+   }
+ else
+   printf("the file is not correct");  
+ 
+    }
+  free(line);
   return (0);
 }
