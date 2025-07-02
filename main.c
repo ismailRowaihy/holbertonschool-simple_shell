@@ -3,7 +3,9 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #include <string.h>
+#include "shell.h"
 
 /**
  *
@@ -14,12 +16,11 @@ int main(void)
 {
   pid_t my_son_pid;
   char *line = NULL;
-  size_t n = 0, i;
+  size_t n = 0,i = 0;
   ssize_t nread;
   char *args[64];
-  extern char **environ;
   char *tokens;
-  const char *deli = " ";
+struct stat st;
   
   while(1)
     {   
@@ -28,43 +29,22 @@ int main(void)
    
       nread = getline(&line,&n,stdin);
       if( nread == -1 )
-	{
-	  break;
-	}
-      line[strcspn(line,"\n")] = 0;
+        break;
       
-      tokens =strtok(line,deli);
-      
-      i = 0;
-      while(tokens)
-      {
-       args[i] = tokens;
-     tokens = strtok(NULL, deli);
-      i++;
-      }
-      
-      args[i] = NULL;
+input_tok(line,tokens,args);
 
-      if (args[0] == NULL)
-	continue;
+if (args[0] == NULL)
+  continue;
 
-      
-      
-      my_son_pid = fork();
-     
-      if (my_son_pid ==  0)
-	{
-	  
-	  if(execve(args[0],args,environ) == -1)
-	    {
-	    exit(EXIT_FAILURE);
-	    }
-	}
-      else
-	{
-	  wait(&my_son_pid);
-	}      
-   }
-  free(line);
+
+if(stat(args[0], &st) == 0)
+{
+my_son_pid = fork();
+file_exec(my_son_pid,args);
+}
+else
+printf("the path is not correct");  
+}
+free(line);
   return (0);
 }
