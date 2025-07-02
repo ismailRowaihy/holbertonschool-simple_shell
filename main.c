@@ -79,7 +79,7 @@ args[0] = abs_path;
 if(args[0][0] == '/')
 free(args[0]);
 free(line);
-              exit(0);
+              exit(2);
 }
    }
 if(args[0][0] == '/')
