@@ -6,8 +6,9 @@
 #include <string.h>
 #include "shell.h"
 
-void input_tok(char *line, char *tokens,char **args){
-int i;
+void input_tok(char *line,char **args){
+  int i;
+ char *tokens;
 
  line[strcspn(line,"\n")] = 0;
       

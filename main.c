@@ -17,11 +17,9 @@ int main(void)
 {
   pid_t my_son_pid;
   char *line = NULL;
-  size_t n = 0,i = 0;
+  size_t n = 0;
   ssize_t nread;
   char *args[64];
-  char *tokens;
-  struct stat st;
   int path;
 
   while(1)
@@ -33,7 +31,7 @@ int main(void)
       if( nread == -1 )
         break;
       
-      input_tok(line,tokens,args);
+      input_tok(line,args);
       if (args[0] == NULL)
 	continue;
 
@@ -46,15 +44,15 @@ int main(void)
 	perror("failed to open the file");
 
 
- if(faccessat(path,args[0], F_OK , 0) != -1)
-   {
-     close(path);
-     my_son_pid = fork();
-     file_exec(my_son_pid,args);
-   }
- else
-   printf("the file is not correct");  
- 
+      if(faccessat(path,args[0], F_OK , 0) != -1)
+	{
+	  close(path);
+	  my_son_pid = fork();
+	  file_exec(my_son_pid,args);
+	}
+      else
+	printf("the file is not correct");  
+      
     }
   free(line);
   return (0);
