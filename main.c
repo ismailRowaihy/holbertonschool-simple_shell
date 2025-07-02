@@ -20,7 +20,7 @@ int main(void)
   size_t n = 0;
   ssize_t nread;
   char *args[64];
-
+  int i;
 
   while(1)
     {
@@ -48,6 +48,10 @@ int main(void)
 	printf("the file is not correct");
 
     }
-  free(line);
+
+  for(i = 0;args[i];i++)
+          free(args[i]);
+
+free(line);
   return (0);
 }
