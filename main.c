@@ -87,19 +87,21 @@ break;
 }
  dir = strtok(NULL, ":");
 }
+
+if (path[0] == '\0')
+{
+    fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+free(path);
+status = 127;
+    continue;
+}
+
 if(path)
 {
 free(path);
 path = NULL;
 }
 
-if (path[0] == '\0')
-{
-    fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
-    free(path);
-    status = 127;
-    continue;
-}
 }
 if(access(args[0],X_OK) == 0)
 {
