@@ -44,7 +44,7 @@ int main(void)
 
       if (args[0] == NULL)
 	continue;
-
+      /*
       if(args[0][0] != '/')
 	{
 	  abs_path = malloc(strlen("/bin/") + strlen(args[0]) + 1);
@@ -59,7 +59,7 @@ int main(void)
 	  args[0] = abs_path;
 
 	}
-      
+      */      
 
       if(access(args[0],F_OK) == 0)
 	{  
