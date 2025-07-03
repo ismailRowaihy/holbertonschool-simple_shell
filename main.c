@@ -72,6 +72,7 @@ dir = strtok(path, ":");
 while (dir != NULL)
 {
 
+
     if (strlen(dir) + strlen(args[0]) + 2 >= sizeof(fullpath))
     {
         dir = strtok(NULL, ":");
@@ -91,6 +92,11 @@ break;
 }
  dir = strtok(NULL, ":");
 }
+if(path)
+{
+free(path);
+path = NULL;
+}
 
 }
 if(access(args[0],X_OK) == 0)
@@ -99,8 +105,8 @@ my_son_pid = fork();
 file_exec(my_son_pid,args);
 }
 }
+
  free(line);
-free(path);  
 return (0);
 
 }
