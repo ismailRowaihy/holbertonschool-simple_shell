@@ -57,12 +57,12 @@ int main(void)
 	    }
 	  strcpy(abs_path,"/bin/");
 	  strcat(abs_path,args[0]);
-	  
 
-	}
-     
 
-      if(access(abs_path,F_OK) == 0)
+      }
+        
+      
+      if(access(abs_path ?abs_path :args[0],F_OK) == 0)
 	{  
 	  my_son_pid = fork();
 	  file_exec(my_son_pid,args);
