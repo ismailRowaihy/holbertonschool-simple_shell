@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <string.h>
+#include "shell.h"
 
 void file_exec(pid_t my_son_pid, char **args)
 {
