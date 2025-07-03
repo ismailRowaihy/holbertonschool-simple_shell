@@ -21,10 +21,11 @@ int main(void)
   ssize_t nread;
   char *args[64];
   char *env ;
-char *path;
-char *fullpath[64];
+char *path = NULL;
+char fullpath[124];
 char *dir;
-char *tmp;
+int i;
+extern char **environ;
   while(1)
     {
 
@@ -42,44 +43,53 @@ char *tmp;
 input_tok(line,args);
 
 
-      if (strcmp(args[0], "exit") == 0)
-	{
+if (strcmp(args[0], "exit") == 0)
+{
 	  free(line);
 	  exit(0);
 	}
 
-
-
-
-
 if (args[0] == NULL)
-	continue;
-
+    continue;
 
 if(access(args[0] ,F_OK) != 0)
 {
-        env = getenv("PATH");
-        path = strdup(env);
-        dir = strtok(path,":");
-fullpath[0] = malloc(strlen(dir) + strlen(args[0]) + 2);
-if(fullpath[0] == NULL)
-return(0);
-while(dir != NULL)
+
+for (i = 0; environ[i] != NULL; i++)
 {
-strcpy(fullpath[0],dir);
-strcat(fullpath[0],"/");
-strcat(fullpath[0],args[0]);
-if(access(fullpath[0],X_OK) == 0)
+    if (strncmp(environ[i], "PATH=", 5) == 0)
+    {
+path = strdup(environ[i] + 5);
+        break;
+    }
+}
+
+
+if (path == NULL)
+continue;
+dir = strtok(path, ":");
+
+while (dir != NULL)
 {
-args[0] =fullpath[0];
+
+    if (strlen(dir) + strlen(args[0]) + 2 >= sizeof(fullpath))
+    {
+        dir = strtok(NULL, ":");
+        continue;
+    }
+
+    strcpy(fullpath, dir);
+    strcat(fullpath, "/");
+    strcat(fullpath, args[0]);
+
+
+if(access(fullpath,X_OK) == 0)
+{
+
+args[0] = fullpath;
 break;
 }
-dir = strtok(NULL,":");
-
-tmp = realloc(fullpath[0],strlen(dir) + strlen(args[0]) + 1);
-if(tmp == NULL)
-free(fullpath[0]);
-fullpath[0] = tmp;
+ dir = strtok(NULL, ":");
 }
 
 }
@@ -89,8 +99,8 @@ my_son_pid = fork();
 file_exec(my_son_pid,args);
 }
 }
-free(fullpath[0]); 
  free(line);
-  return (0);
+free(path);  
+return (0);
 
 }
