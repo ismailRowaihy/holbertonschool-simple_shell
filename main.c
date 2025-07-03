@@ -20,7 +20,6 @@ int main(void)
   size_t n = 0;
   ssize_t nread;
   char *args[64];
-  char *env ;
 char *path = NULL;
 char fullpath[124];
 char *dir;
