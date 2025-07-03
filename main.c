@@ -35,8 +35,10 @@ extern char **environ;
       nread = getline(&line,&n,stdin);
             if( nread == -1 )
               break;
-         
-if (line[0] == '\n' || strspn(line, " \t\n") == strlen(line)) continue;
+
+if(only_spaces(line))
+continue;
+
 
 input_tok(line,args);
 
