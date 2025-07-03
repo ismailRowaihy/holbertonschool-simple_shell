@@ -6,10 +6,11 @@
 #include <string.h>
 #include "shell.h"
 
-void file_exec(pid_t my_son_pid, char **args)
+int file_exec(pid_t my_son_pid, char **args)
 {
+  int status;  
 
-	if (my_son_pid ==  0)
+  if (my_son_pid ==  0)
 	{
 
 		if (execve(args[0], args, environ) == -1)
@@ -19,6 +20,13 @@ void file_exec(pid_t my_son_pid, char **args)
 	}
 	else
 	{
-		wait(&my_son_pid);
+	  waitpid(my_son_pid, &status, 0);
+
+	  if (WIFEXITED(status))
+	    {
+	      return (WEXITSTATUS(status));
+	    }
+	  
 	}
+  return (0);
 }

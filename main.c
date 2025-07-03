@@ -47,7 +47,7 @@ int main(void)
 		if (strcmp(args[0], "exit") == 0)
 		{
 			free(line);
-			exit(0);
+			exit(status);
 		}
 
 		if (args[0] == NULL)
@@ -113,13 +113,13 @@ int main(void)
 		}
 		if (access(args[0], X_OK) == 0)
 		{
-			my_son_pid = fork();
-			file_exec(my_son_pid, args);
+		  my_son_pid = fork();
+		  status = file_exec(my_son_pid, args);
 		}
 		else
 		  {
 		    fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
-            status = 127;
+		    status = 127;
 		  }
 	}
 
