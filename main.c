@@ -69,10 +69,15 @@ int main(void)
 		 break;
 	       }
 	   }
+
+	 if(!path)
+	   {
+	     status = 127;
+	     fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);	     
+	     continue;  
+	   }
 	 
 	 
-	 if (path == NULL)
-	   continue;
 	 dir = strtok(path, ":");
 	 
 	 while (dir != NULL)
