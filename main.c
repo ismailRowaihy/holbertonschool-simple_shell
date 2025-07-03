@@ -85,7 +85,14 @@ if(access(fullpath,X_OK) == 0)
 args[0] = fullpath;
 break;
 }
- dir = strtok(NULL, ":");
+else
+{
+status = 127;
+    fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+free(path);
+continue;
+} 
+dir = strtok(NULL, ":");
 }
 
 if (path[0] == '\0')
