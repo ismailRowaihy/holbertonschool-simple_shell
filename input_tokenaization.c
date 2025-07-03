@@ -17,8 +17,8 @@ tokens =strtok(line," ");
   i = 0;
   while(tokens)
 {
-args[i] = tokens;
-
+    args[i] = tokens;
+       printf("%s",args[i]);
 tokens = strtok(NULL," ");
 i++;
 }

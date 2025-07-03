@@ -30,10 +30,11 @@ int main(void)
 
       nread = getline(&line,&n,stdin);
             if( nread == -1 )
-	      break;
-	    if(nread == 1)
-	      continue;
-	    input_tok(line,args);
+              break;
+          if(nread == 1)
+              continue;            
+
+            input_tok(line,args);
 
       if (strcmp(args[0], "exit") == 0)
 	{
@@ -41,10 +42,10 @@ int main(void)
 	  exit(0);
 	}
 
-
-      if (args[0] == NULL)
+ 
+            if (args[0] == NULL)          
 	continue;
-      /*
+
       if(args[0][0] != '/')
 	{
 	  abs_path = malloc(strlen("/bin/") + strlen(args[0]) + 1);
@@ -56,21 +57,18 @@ int main(void)
 	    }
 	  strcpy(abs_path,"/bin/");
 	  strcat(abs_path,args[0]);
-	  args[0] = abs_path;
+	  
 
 	}
-      */      
+     
 
-      if(access(args[0],F_OK) == 0)
+      if(access(abs_path,F_OK) == 0)
 	{  
 	  my_son_pid = fork();
 	  file_exec(my_son_pid,args);
 	}
-      else
-	{
-	  
-	}
-    }
+
+        }
   if(abs_path)
     free(abs_path);
 
