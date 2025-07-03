@@ -1,9 +1,0 @@
-<tonschool-simple_shell/
-+ ..
-AUTHORS
-README.md
-a.out
-file_execution.c
-input_tokenaization.c
-main.c
-shell.h
