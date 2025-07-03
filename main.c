@@ -24,6 +24,7 @@ char *path = NULL;
 char fullpath[124];
 char *dir;
 int i;
+int status = 0;
 extern char **environ;
   while(1)
     {
@@ -71,22 +72,16 @@ dir = strtok(path, ":");
 
 while (dir != NULL)
 {
-
-
     if (strlen(dir) + strlen(args[0]) + 2 >= sizeof(fullpath))
     {
         dir = strtok(NULL, ":");
         continue;
     }
-
     strcpy(fullpath, dir);
     strcat(fullpath, "/");
     strcat(fullpath, args[0]);
-
-
 if(access(fullpath,X_OK) == 0)
 {
-
 args[0] = fullpath;
 break;
 }
@@ -98,6 +93,13 @@ free(path);
 path = NULL;
 }
 
+if (path[0] == '\0')
+{
+    fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+    free(path);
+    status = 127;
+    continue;
+}
 }
 if(access(args[0],X_OK) == 0)
 {
@@ -107,6 +109,6 @@ file_exec(my_son_pid,args);
 }
 
  free(line);
-return (0);
+return (status);
 
 }
