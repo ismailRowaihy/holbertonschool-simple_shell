@@ -13,7 +13,7 @@ extern char **environ;
       
 	  if(execve(args[0],args,environ) == -1)
 	    {
-	      exit(0);
+	      exit(EXIT_FAILURE);
 	    }
 	}
       else
