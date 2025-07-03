@@ -7,10 +7,11 @@
 
 void file_exec(pid_t my_son_pid, char **args)
 {
+extern char **environ;
   if (my_son_pid ==  0)
 	{
       
-	  if(execvp(args[0],args) == -1)
+	  if(execve(args[0],args,environ) == -1)
 	    {
 	      exit(EXIT_FAILURE);
 	    }

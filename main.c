@@ -20,13 +20,11 @@ int main(void)
   size_t n = 0;
   ssize_t nread;
   char *args[64];
-  char *abs_path;
   char *env ;
 char *path;
 char *fullpath[64];
 char *dir;
 char *tmp;
-extern char **environ;
   while(1)
     {
 
